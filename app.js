@@ -18,10 +18,18 @@ app.addEventListener("click", (e) => {
       if (currentDisplay.innerText === "0") {
         currentDisplay.innerText = "";
         currentDisplay.innerText = e.target.innerText;
+        document.querySelector(".delete").innerText = "C";
       } else {
         currentDisplay.innerText += e.target.innerText;
+        document.querySelector(".delete").innerText = "C";
       }
     }
     // console.log(e.target.innerText);
+  } else if (e.target.classList.contains("delete")) {
+    currentDisplay.innerText = "0";
+    document.querySelector(".delete").innerText = "AC";
   }
+  // else if (e.target.classList.contains("sign")){
+  //   currentDisplay =
+  // }
 });
