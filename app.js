@@ -28,8 +28,15 @@ app.addEventListener("click", (e) => {
   } else if (e.target.classList.contains("delete")) {
     currentDisplay.innerText = "0";
     document.querySelector(".delete").innerText = "AC";
+  } else if (e.target.classList.contains("function")) {
+    if (currentDisplay.innerText !== "0") {
+      result.push(Number(currentDisplay.innerText));
+      result.push(e.target.innerText);
+      if (e.target.classList.contains("numbers")) {
+        currentDisplay.innerText = "";
+        currentDisplay.innerText += e.target.innerText;
+      }
+    }
+    console.log(result);
   }
-  // else if (e.target.classList.contains("sign")){
-  //   currentDisplay =
-  // }
 });
