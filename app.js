@@ -9,6 +9,7 @@ numbers.forEach((item) => {
 });
 console.log(numberArray);
 
+let display = [];
 const result = [];
 
 app.addEventListener("click", (e) => {
@@ -17,17 +18,29 @@ app.addEventListener("click", (e) => {
     } else {
       if (currentDisplay.innerText === "0") {
         currentDisplay.innerText = "";
-        currentDisplay.innerText = e.target.innerText;
+        display.push(e.target.innerText);
+        currentDisplay.innerText = display.join("");
         document.querySelector(".delete").innerText = "C";
       } else {
-        currentDisplay.innerText += e.target.innerText;
-        document.querySelector(".delete").innerText = "C";
+        if (display.length < 11) {
+          if (display.length === 3) {
+            display.splice(3, 0, ".");
+          } else if (display.length === 7) {
+            display.splice(7, 0, ".");
+          }
+          display.push(e.target.innerText);
+          currentDisplay.innerText = display.join("");
+          document.querySelector(".delete").innerText = "C";
+        }
       }
     }
+    console.log(display);
     // console.log(e.target.innerText);
   } else if (e.target.classList.contains("delete")) {
     currentDisplay.innerText = "0";
     document.querySelector(".delete").innerText = "AC";
+    display = [];
+    console.log(display);
   } else if (e.target.classList.contains("function")) {
     if (currentDisplay.innerText !== "0") {
       result.push(Number(currentDisplay.innerText));
