@@ -10,6 +10,7 @@ numbers.forEach((item) => {
 console.log(numberArray);
 
 let display = [];
+let storage = [];
 let result = [];
 
 let sign = true;
@@ -51,44 +52,80 @@ const clear = () => {
   display = [];
   sign = true;
 };
-
+console.log(document.querySelector(".plus").innerText);
+console.log(document.querySelector(".minus").innerText);
+console.log(document.querySelector(".divide").innerText);
+const operations = (btn) => {
+  storage.forEach((item, i) => {
+    if (item === "×") {
+      storage[i + 1] = storage[i - 1] * storage[i + 1];
+      result.push(storage[i + 1]);
+    } else if (item === "÷") {
+      storage[i + 1] = storage[i + 1] / storage[i - 1];
+      result.push(storage[i + 1]);
+    } else if (item === "+") {
+    } else if (item === "−") {
+    }
+  });
+};
+console.log(storage);
 app.addEventListener("click", (e) => {
   // If user clicks to a number
+
   if (e.target.classList.contains("numbers")) {
     // If user clicks to 0 while the display already shows 0
     if (currentDisplay.innerText === "0" && e.target.innerText === "0") {
     } else {
       // If user clicks to a number other than 0 while display shows 0
       if (currentDisplay.innerText === "0") {
-        currentDisplay.innerText = "";
-        display.push(e.target.innerText);
-        currentDisplay.innerText = display.join("");
-        document.querySelector(".delete").innerText = "C";
+        if (storage.length === 0) {
+          currentDisplay.innerText = "";
+          display.push(e.target.innerText);
+          currentDisplay.innerText = display.join("");
+          document.querySelector(".delete").innerText = "C";
+          console.log(display);
+        } else {
+          display = [];
+          currentDisplay.innerText = "";
+          display.push(e.target.innerText);
+          currentDisplay.innerText = display.join("");
+          document.querySelector(".delete").innerText = "C";
+        }
       }
       // If user clicks to any number while display is not 0
       else {
-        if (display.includes("-")) {
-          // Display length limit
-          if (display.length < 10) {
-            display.push(e.target.innerText);
-            currentDisplay.innerText = currentDisplay.innerText = Number(
-              display.join("")
-            ).toLocaleString("de-DE");
-            document.querySelector(".delete").innerText = "C";
+        if (storage.length === 0) {
+          if (display.includes("-")) {
+            // Display length limit
+            if (display.length < 10) {
+              display.push(e.target.innerText);
+              currentDisplay.innerText = currentDisplay.innerText = Number(
+                display.join("")
+              ).toLocaleString("de-DE");
+              document.querySelector(".delete").innerText = "C";
+            }
+          } else {
+            // Display length limit
+            if (display.length < 9) {
+              display.push(e.target.innerText);
+              currentDisplay.innerText = currentDisplay.innerText = Number(
+                display.join("")
+              ).toLocaleString("de-DE");
+              document.querySelector(".delete").innerText = "C";
+            }
           }
         } else {
-          // Display length limit
-          if (display.length < 9) {
-            display.push(e.target.innerText);
-            currentDisplay.innerText = currentDisplay.innerText = Number(
-              display.join("")
-            ).toLocaleString("de-DE");
-            document.querySelector(".delete").innerText = "C";
-          }
+          console.log(display);
+          console.log(storage);
+          display = [];
+          currentDisplay.innerText = "";
+          display.push(e.target.innerText);
+          currentDisplay.innerText = display.join("");
+          document.querySelector(".delete").innerText = "C";
+          console.log(display);
         }
       }
     }
-    console.log(display);
     // console.log(e.target.innerText);
   }
   // Delete function
@@ -125,16 +162,22 @@ app.addEventListener("click", (e) => {
   }
   // If user clicks to any function
   else if (e.target.classList.contains("function")) {
-    // Push the number to result array if display is not 0
-    if (currentDisplay.innerText !== "0") {
-      result.push(Number(currentDisplay.innerText));
-      result.push(e.target.innerText);
-      if (e.target.classList.contains("numbers")) {
-        currentDisplay.innerText = "";
-        currentDisplay.innerText += e.target.innerText;
+    storage.push(Number(currentDisplay.innerText));
+    storage.push(e.target.innerText);
+    if (storage.length > 2) {
+      if (e.target.classList.contains("mult")) {
+        multDiv(e.target);
       }
     }
+  } else if (e.target.matches(".equals")) {
     console.log(result);
+    console.log(storage);
+    storage.push(Number(currentDisplay.innerText));
+    multDiv();
+    if (result.length === 0) {
+    } else {
+      currentDisplay.innerText = result.join("").toLocaleString("de-DE");
+    }
   }
 });
 
