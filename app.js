@@ -16,7 +16,8 @@ let sign = true;
 const changeSign = () => {
   if (currentDisplay.innerText === "0") {
   } else {
-    if (sign) {
+    currentDisplay.innerText = -currentDisplay.innerText;
+    /*     if (sign) {
       display.unshift("-");
       currentDisplay.innerText = Number(display.join("")).toLocaleString(
         "de-DE"
@@ -28,12 +29,15 @@ const changeSign = () => {
         "de-DE"
       );
       sign = true;
-    }
+    } */
   }
 };
 
 const percent = () => {
-  const percentageValue = parseFloat(Number(currentDisplay.innerText) / 100);
+  display = currentDisplay.innerText.split("");
+  console.log(display);
+  const percentageValue = parseFloat(Number(display.join("")) / 100);
+
   if (percentageValue.toString().split("").length < 10) {
     currentDisplay.innerText = percentageValue;
   } else {
@@ -104,6 +108,7 @@ app.addEventListener("click", (e) => {
       currentDisplay.innerText = Number(display.join("")).toLocaleString(
         "de-DE"
       );
+    } else if (currentDisplay.innerText === "0,") {
     } else {
       currentDisplay.innerText = Number(display.join("")).toLocaleString(
         "de-DE"
