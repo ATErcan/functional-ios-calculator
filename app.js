@@ -10,7 +10,43 @@ numbers.forEach((item) => {
 console.log(numberArray);
 
 let display = [];
-const result = [];
+let result = [];
+
+let sign = true;
+const changeSign = () => {
+  if (currentDisplay.innerText === "0") {
+  } else {
+    if (sign) {
+      display.unshift("-");
+      currentDisplay.innerText = Number(display.join("")).toLocaleString(
+        "de-DE"
+      );
+      sign = false;
+    } else {
+      display.shift();
+      currentDisplay.innerText = Number(display.join("")).toLocaleString(
+        "de-DE"
+      );
+      sign = true;
+    }
+  }
+};
+
+const percent = () => {
+  const percentageValue = parseFloat(Number(currentDisplay.innerText) / 100);
+  if (percentageValue.toString().split("").length < 10) {
+    currentDisplay.innerText = percentageValue;
+  } else {
+    alert("Number of values that can be entered exceeded");
+  }
+};
+
+const clear = () => {
+  currentDisplay.innerText = "0";
+  document.querySelector(".delete").innerText = "AC";
+  display = [];
+  sign = true;
+};
 
 app.addEventListener("click", (e) => {
   // If user clicks to a number
@@ -27,27 +63,22 @@ app.addEventListener("click", (e) => {
       }
       // If user clicks to any number while display is not 0
       else {
-        // If user ever used comma
-        if (!display.includes(",")) {
+        if (display.includes("-")) {
           // Display length limit
-          if (display.length < 11) {
-            if (display.length === 3) {
-              display.splice(3, 0, ".");
-            } else if (display.length === 7) {
-              display.splice(7, 0, ".");
-            }
+          if (display.length < 10) {
             display.push(e.target.innerText);
-            currentDisplay.innerText = display.join("");
+            currentDisplay.innerText = currentDisplay.innerText = Number(
+              display.join("")
+            ).toLocaleString("de-DE");
             document.querySelector(".delete").innerText = "C";
-            console.log(display[-1]);
           }
-        }
-        // If user haven't used comma
-        else {
+        } else {
           // Display length limit
           if (display.length < 9) {
             display.push(e.target.innerText);
-            currentDisplay.innerText = display.join("");
+            currentDisplay.innerText = currentDisplay.innerText = Number(
+              display.join("")
+            ).toLocaleString("de-DE");
             document.querySelector(".delete").innerText = "C";
           }
         }
@@ -58,23 +89,34 @@ app.addEventListener("click", (e) => {
   }
   // Delete function
   else if (e.target.classList.contains("delete")) {
-    currentDisplay.innerText = "0";
-    document.querySelector(".delete").innerText = "AC";
-    display = [];
-    console.log(display);
+    clear();
   }
   // If user clicks to comma
   else if (e.target.classList.contains("comma")) {
     // If user clicks to comma while display shows 0
     if (currentDisplay.innerText === "0") {
-      display.push("0", e.target.innerText);
-      currentDisplay.innerText = display.join("");
+      display.push(0, ".");
+      currentDisplay.innerText = "0,";
     }
     // If user clicks to comma and display has no comma in it
-    else if (!display.includes(",")) {
-      display.push(e.target.innerText);
-      currentDisplay.innerText = display.join("");
+    else if (!display.includes(".")) {
+      display.push(".");
+      currentDisplay.innerText = Number(display.join("")).toLocaleString(
+        "de-DE"
+      );
+    } else {
+      currentDisplay.innerText = Number(display.join("")).toLocaleString(
+        "de-DE"
+      );
     }
+  }
+  // Change sign
+  else if (e.target.classList.contains("sign")) {
+    changeSign();
+  }
+  // Percentage
+  else if (e.target.classList.contains("percent")) {
+    percent();
   }
   // If user clicks to any function
   else if (e.target.classList.contains("function")) {
@@ -90,3 +132,9 @@ app.addEventListener("click", (e) => {
     console.log(result);
   }
 });
+
+/* function numberWithCommas(x) {
+  let parts = x.toString().split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return parts.join(",");
+} */
