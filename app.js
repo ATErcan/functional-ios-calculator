@@ -3,12 +3,6 @@ const currentDisplay = document.querySelector(".current-display");
 
 const numbers = document.querySelectorAll(".numbers");
 
-const numberArray = [];
-numbers.forEach((item) => {
-  numberArray.push(item.innerText);
-});
-console.log(numberArray);
-
 let display = [];
 let storage = [];
 let result = [];
@@ -50,6 +44,8 @@ const clear = () => {
   currentDisplay.innerText = "0";
   document.querySelector(".delete").innerText = "AC";
   display = [];
+  storage = [];
+  result = [];
   sign = true;
 };
 console.log(document.querySelector(".plus").innerText);
@@ -64,7 +60,11 @@ const operations = (btn) => {
       storage[i + 1] = storage[i + 1] / storage[i - 1];
       result.push(storage[i + 1]);
     } else if (item === "+") {
+      storage[i + 1] = storage[i + 1] + storage[i - 1];
+      result.push(storage[i + 1]);
     } else if (item === "−") {
+      storage[i + 1] = storage[i + 1] - storage[i - 1];
+      result.push(storage[i + 1]);
     }
   });
 };
@@ -162,18 +162,22 @@ app.addEventListener("click", (e) => {
   }
   // If user clicks to any function
   else if (e.target.classList.contains("function")) {
-    storage.push(Number(currentDisplay.innerText));
+    storage.push(
+      Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
+    );
     storage.push(e.target.innerText);
     if (storage.length > 2) {
       if (e.target.classList.contains("mult")) {
-        multDiv(e.target);
+        operations(e.target);
       }
     }
   } else if (e.target.matches(".equals")) {
     console.log(result);
     console.log(storage);
-    storage.push(Number(currentDisplay.innerText));
-    multDiv();
+    storage.push(
+      Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
+    );
+    operations();
     if (result.length === 0) {
     } else {
       currentDisplay.innerText = result.join("").toLocaleString("de-DE");
@@ -186,3 +190,5 @@ app.addEventListener("click", (e) => {
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   return parts.join(",");
 } */
+
+// Number(currentDisplay.innerText.split(".").join("").replace(",", "."));
