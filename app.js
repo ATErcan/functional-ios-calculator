@@ -3,6 +3,7 @@ const currentDisplay = document.querySelector(".current-display");
 const deleteAll = document.querySelector(".delete");
 const numbers = document.querySelectorAll(".numbers");
 
+// The function that runs when the user clicks to a number.
 const numberClick = (number) => {
   if (
     currentDisplay.innerText.split(".").join("").split(",").join("").split("")
@@ -20,11 +21,13 @@ const numberClick = (number) => {
   }
 };
 
+// The clear function
 const clear = () => {
   currentDisplay.innerText = "0";
   deleteAll.innerText = "AC";
 };
 
+// The function that runs when the user clicks to the comma.
 const commaClick = (comma) => {
   if (currentDisplay.innerText === "0") {
     currentDisplay.innerText = "0,";
@@ -36,6 +39,7 @@ const commaClick = (comma) => {
   }
 };
 
+// Function to change the sign of the number.
 const changeSign = () => {
   const changed = parseFloat(
     Number(currentDisplay.innerText.split(".").join("").replace(",", ".")) * -1
@@ -44,6 +48,7 @@ const changeSign = () => {
   currentDisplay.innerText = changed.toString().replace(".", ",");
 };
 
+// Function to calculate percentage of the number
 const percent = () => {
   const percentageValue =
     Number(currentDisplay.innerText.split(".").join("").replace(",", ".")) /
@@ -59,6 +64,7 @@ const percent = () => {
   }
 };
 
+// Calculator event with capturing
 app.addEventListener("click", (e) => {
   // If user clicks to a number
   if (e.target.classList.contains("numbers")) {
@@ -82,28 +88,13 @@ app.addEventListener("click", (e) => {
   }
   // If user clicks to any function
   else if (e.target.classList.contains("function")) {
-    storage.push(
-      Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
-    );
-    storage.push(e.target.innerText);
-    if (storage.length > 2) {
-      if (e.target.classList.contains("mult")) {
-        operations(e.target);
-      }
-    }
   } else if (e.target.matches(".equals")) {
-    console.log(result);
-    console.log(storage);
-    storage.push(
-      Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
-    );
-    operations();
-    if (result.length === 0) {
-    } else {
-      currentDisplay.innerText = result.join("").toLocaleString("de-DE");
-    }
   }
 });
+
+const numberWriting = () => {
+  currentDisplay.innerText.split(".").join("").split(",").join("").split("");
+};
 
 /* let display = [];
   let storage = [];
