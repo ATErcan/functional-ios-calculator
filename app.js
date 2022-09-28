@@ -1,5 +1,6 @@
 const app = document.querySelector(".app");
 const currentDisplay = document.querySelector(".current-display");
+const deleteAll = document.querySelector(".delete");
 
 const numbers = document.querySelectorAll(".numbers");
 
@@ -7,6 +8,53 @@ let display = [];
 let storage = [];
 let result = [];
 
+const numberClick = (number) => {
+  if (currentDisplay.innerText === "0" && number.innerText === "0") {
+  } else if (currentDisplay.innerText === "0") {
+    currentDisplay.innerText = "";
+    currentDisplay.innerText = number.innerText;
+    deleteAll.innerText = "C";
+  } else {
+    currentDisplay.innerText += number.innerText;
+    deleteAll.innerText = "C";
+  }
+};
+
+const clear = () => {
+  currentDisplay.innerText = "0";
+  deleteAll.innerText = "AC";
+};
+
+const commaClick = (comma) => {
+  if (currentDisplay.innerText === "0") {
+    currentDisplay.innerText = "0,";
+  } else if (currentDisplay.split(".").join("").split("").includes(",")) {
+  } else {
+    currentDisplay.innerText += comma.innerText;
+  }
+};
+
+const changeSign = () => {
+  currentDisplay.innerText = parseFloat(
+    Number(currentDisplay.split(".").join("").replace(",", ".")) * -1
+  );
+};
+
+const percent = () => {
+  const percentageValue =
+    Number(currentDisplay.split(".").join("").replace(",", ".")) / 100;
+};
+
+/* const clear = () => {
+  currentDisplay.innerText = "0";
+  deleteAll.innerText = "AC";
+  display = [];
+  storage = [];
+  result = [];
+  sign = true;
+}; */
+
+/*
 let sign = true;
 const changeSign = () => {
   if (currentDisplay.innerText === "0") {
@@ -24,36 +72,29 @@ const changeSign = () => {
         "de-DE"
       );
       sign = true;
-    } */
+    } sdasdas
   }
 };
+*/
 
-const percent = () => {
+/* const percent = () => {
   display = currentDisplay.innerText.split("");
   console.log(display);
   const percentageValue = parseFloat(Number(display.join("")) / 100);
-
+  
   if (percentageValue.toString().split("").length < 10) {
     currentDisplay.innerText = percentageValue;
   } else {
     alert("Number of values that can be entered exceeded");
   }
-};
+}; */
 
-const clear = () => {
-  currentDisplay.innerText = "0";
-  document.querySelector(".delete").innerText = "AC";
-  display = [];
-  storage = [];
-  result = [];
-  sign = true;
-};
 console.log(document.querySelector(".plus").innerText);
 console.log(document.querySelector(".minus").innerText);
 console.log(document.querySelector(".divide").innerText);
 const operations = (btn) => {
   storage.forEach((item, i) => {
-    if (item === "×") {
+    if (item === "") {
       storage[i + 1] = storage[i - 1] * storage[i + 1];
       result.push(storage[i + 1]);
     } else if (item === "÷") {
@@ -192,3 +233,10 @@ app.addEventListener("click", (e) => {
 } */
 
 // Number(currentDisplay.innerText.split(".").join("").replace(",", "."));
+
+/* switch(operator.innerText){
+  case ×: 
+  case ÷:
+  case +:
+  case −: 
+} */
