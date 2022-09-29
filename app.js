@@ -5,22 +5,28 @@ const numbers = document.querySelectorAll(".numbers");
 
 let storage = [];
 let numberEntered = false;
+let newNumberEntry = false;
 
 // The function that runs when the user clicks to a number.
 const numberClick = (number) => {
-  if (
-    currentDisplay.innerText.split(".").join("").split(",").join("").split("")
-      .length < 9
-  ) {
-    if (currentDisplay.innerText === "0" && number.innerText === "0") {
-    } else if (currentDisplay.innerText === "0") {
-      currentDisplay.innerText = "";
-      currentDisplay.innerText = number.innerText;
-      deleteAll.innerText = "C";
-    } else {
-      currentDisplay.innerText += number.innerText;
-      deleteAll.innerText = "C";
+  if (!newNumberEntry) {
+    if (
+      currentDisplay.innerText.split(".").join("").split(",").join("").split("")
+        .length < 9
+    ) {
+      if (currentDisplay.innerText === "0" && number.innerText === "0") {
+      } else if (currentDisplay.innerText === "0") {
+        currentDisplay.innerText = "";
+        currentDisplay.innerText = number.innerText;
+        deleteAll.innerText = "C";
+      } else {
+        currentDisplay.innerText += number.innerText;
+        deleteAll.innerText = "C";
+      }
     }
+  } else {
+    currentDisplay.innerText = number.innerText;
+    newNumberEntry = false;
   }
 };
 
@@ -28,6 +34,9 @@ const numberClick = (number) => {
 const clear = () => {
   currentDisplay.innerText = "0";
   deleteAll.innerText = "AC";
+  numberEntered = false;
+  newNumberEntry = false;
+  storage = [];
 };
 
 // The function that runs when the user clicks to the comma.
@@ -96,29 +105,47 @@ app.addEventListener("click", (e) => {
     }
     // Storage is empty and some number entered
     else if (storage.length === 0 && numberEntered) {
-      console.log("depo bos numaraya tiklandi");
       storage.push(
         Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
       );
       storage.push(e.target.innerText);
       numberEntered = false;
+      newNumberEntry = true;
     }
     // Storage is not empty, but user wants to change the operator
     else if (storage.length !== 0 && !numberEntered) {
-      console.log("depoda bir sey var, ama numaraya tekrar tiklanmadi");
       storage.pop();
       storage.push(e.target.innerText);
+      newNumberEntry = true;
     }
     // Storage is not empty but user wants to add more operation
     else if (storage.length !== 0 && numberEntered) {
-      console.log("depoda bir sey var ve yeni numara girildi");
       storage.push(
         Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
       );
       storage.push(e.target.innerText);
       numberEntered = false;
+      newNumberEntry = true;
     }
-  } else if (e.target.matches(".equals")) {
+  }
+  // If user clicks to equals
+  else if (e.target.matches(".equals")) {
+    if (storage.length === 0 && !numberEntered) {
+    } else if (storage.length === 0 && numberEntered) {
+    } else if (storage.length !== 0 && !numberEntered) {
+      storage.push(
+        Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
+      );
+      operations();
+      newNumberEntry = true;
+    } else if (storage.length !== 0 && numberEntered) {
+      storage.push(
+        Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
+      );
+      numberEntered = false;
+      operations();
+      newNumberEntry = true;
+    }
   }
 });
 
@@ -204,7 +231,7 @@ const changeSign = () => {
 console.log(document.querySelector(".plus").innerText);
 console.log(document.querySelector(".minus").innerText);
 console.log(document.querySelector(".divide").innerText);
-const operations = (btn) => {
+const operations = () => {
   storage.forEach((item, i) => {
     if (item === "×") {
       storage[i + 1] = storage[i - 1] * storage[i + 1];
@@ -213,10 +240,12 @@ const operations = (btn) => {
     } else if (item === "+") {
       storage[i + 1] = storage[i + 1] + storage[i - 1];
     } else if (item === "−") {
-      storage[i + 1] = storage[i + 1] - storage[i - 1];
+      storage[i + 1] = storage[i - 1] - storage[i + 1];
     }
   });
-  return storage[storage.length - 1];
+  currentDisplay.innerText = storage[storage.length - 1]
+    .toString()
+    .replace(".", ",");
 };
 // console.log(storage);
 
