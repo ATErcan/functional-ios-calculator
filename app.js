@@ -207,6 +207,12 @@ const activeOperator = (btn) => {
   });
 };
 
+const removeColor = () => {
+  operators.forEach((item) => {
+    item.classList.remove("active-operator");
+  });
+};
+
 // Calculator event with capturing
 app.addEventListener("click", (e) => {
   activeOperator(e.target);
@@ -276,7 +282,10 @@ document.querySelector("body").addEventListener("keydown", handleKeyboardInput);
 
 function handleKeyboardInput(e) {
   if (e.key === "=" || e.key === "Enter") equals();
-  if (e.key === "Backspace") clear();
+  if (e.key === "Backspace") {
+    clear();
+    removeColor();
+  }
   if (e.key === "Shift") changeSign();
   if (e.key === "%") percent();
 }
