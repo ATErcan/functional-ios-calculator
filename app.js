@@ -57,6 +57,7 @@ const changeSign = () => {
     Number(currentDisplay.innerText.split(".").join("").replace(",", ".")) * -1
   );
   currentDisplay.innerText = changed.toString().replace(".", ",");
+  numberWriting(currentDisplay);
 };
 
 // Function to calculate percentage of the number
@@ -80,6 +81,7 @@ app.addEventListener("click", (e) => {
   // If user clicks to a number
   if (e.target.classList.contains("numbers")) {
     numberClick(e.target);
+    numberWriting(currentDisplay);
     numberEntered = true;
   }
   // Delete function
@@ -114,7 +116,11 @@ app.addEventListener("click", (e) => {
     }
     // Storage is not empty, but user wants to change the operator
     else if (storage.length !== 0 && !numberEntered) {
-      storage.pop();
+      if (typeof storage[storage.length - 1] !== "number") {
+        storage.pop();
+      } else {
+        storage = [storage[storage.length - 1]];
+      }
       storage.push(e.target.innerText);
       newNumberEntry = true;
     }
@@ -137,48 +143,93 @@ app.addEventListener("click", (e) => {
         Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
       );
       operations();
-      newNumberEntry = true;
     } else if (storage.length !== 0 && numberEntered) {
       storage.push(
         Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
       );
-      numberEntered = false;
       operations();
       newNumberEntry = true;
     }
   }
 });
 
-/* const numberWriting = (screen) => {
+const numberWriting = (screen) => {
   const displayArray = screen.innerText.split(".").join("").split("");
   if (displayArray.includes(",")) {
-    const indexOfComma = displayArray.indexOf(",");
-    const afterComma = displayArray.splice(
-      indexOfComma,
-      displayArray.length - indexOfComma
-    );
-    console.log(afterComma);
-    console.log(displayArray);
-    if (displayArray.length > 5 && displayArray.length < 9) {
-      displayArray.splice(displayArray.length - 3, 0, ".");
-      displayArray.splice(displayArray.length - 7, 0, ".");
-      screen.innerText = displayArray.join("").concat(afterComma.join(""));
-    } else if (displayArray.length > 2 && displayArray.length < 9) {
-      displayArray.splice(displayArray.length - 3, 0, ".");
-      screen.innerText = displayArray.join("").concat(afterComma.join(""));
+    if (displayArray.includes("-")) {
+      displayArray.join("").split("-").join("").split("");
+      const indexOfComma = displayArray.indexOf(",");
+      const afterComma = displayArray.splice(
+        indexOfComma,
+        displayArray.length - indexOfComma
+      );
+
+      if (displayArray.length > 7 && displayArray.length < 11) {
+        displayArray.splice(displayArray.length - 3, 0, ".");
+        displayArray.splice(displayArray.length - 7, 0, ".");
+        screen.innerText = displayArray.join("").concat(afterComma.join(""));
+      } else if (
+        displayArray.join("").split("-").join("").split("").length === 6
+      ) {
+        displayArray.splice(displayArray.length - 3, 0, ".");
+        screen.innerText = displayArray.join("").concat(afterComma.join(""));
+      } else if (displayArray.length > 4 && displayArray.length < 9) {
+        displayArray.splice(displayArray.length - 3, 0, ".");
+        screen.innerText = displayArray.join("").concat(afterComma.join(""));
+      } else if (
+        displayArray.join("").split("-").join("").split("").length === 3
+      ) {
+        screen.innerText = displayArray.join("").concat(afterComma.join(""));
+      }
+    } else {
+      const indexOfComma = displayArray.indexOf(",");
+      const afterComma = displayArray.splice(
+        indexOfComma,
+        displayArray.length - indexOfComma
+      );
+      console.log(afterComma);
+      console.log(displayArray);
+      if (displayArray.length > 6 && displayArray.length < 9) {
+        displayArray.splice(displayArray.length - 3, 0, ".");
+        displayArray.splice(displayArray.length - 7, 0, ".");
+        screen.innerText = displayArray.join("").concat(afterComma.join(""));
+      } else if (displayArray.length > 3 && displayArray.length < 9) {
+        displayArray.splice(displayArray.length - 3, 0, ".");
+        screen.innerText = displayArray.join("").concat(afterComma.join(""));
+      }
     }
   } else {
-    if (displayArray.length > 5 && displayArray.length < 9) {
-      displayArray.splice(displayArray.length - 2, 0, ".");
-      displayArray.splice(displayArray.length - 6, 0, ".");
-      screen.innerText = displayArray.join("");
-    } else if (displayArray.length > 2 && displayArray.length < 9) {
-      displayArray.splice(displayArray.length - 2, 0, ".");
-      screen.innerText = displayArray.join("");
+    if (displayArray.includes("-")) {
+      if (displayArray.length > 7 && displayArray.length < 11) {
+        displayArray.splice(displayArray.length - 3, 0, ".");
+        displayArray.splice(displayArray.length - 7, 0, ".");
+        screen.innerText = displayArray.join("");
+      } else if (
+        displayArray.join("").split("-").join("").split("").length === 6
+      ) {
+        displayArray.splice(displayArray.length - 3, 0, ".");
+        screen.innerText = displayArray.join("");
+      } else if (displayArray.length > 4 && displayArray.length < 9) {
+        displayArray.splice(displayArray.length - 3, 0, ".");
+        screen.innerText = displayArray.join("");
+      } else if (
+        displayArray.join("").split("-").join("").split("").length === 3
+      ) {
+        screen.innerText = displayArray.join("");
+      }
+    } else {
+      if (displayArray.length > 6 && displayArray.length < 10) {
+        displayArray.splice(displayArray.length - 3, 0, ".");
+        displayArray.splice(displayArray.length - 7, 0, ".");
+        screen.innerText = displayArray.join("");
+      } else if (displayArray.length > 3 && displayArray.length < 9) {
+        displayArray.splice(displayArray.length - 3, 0, ".");
+        screen.innerText = displayArray.join("");
+      }
     }
   }
   // currentDisplay.innerText.split(".").join("").split(",").join("").split("");
-}; */
+};
 
 /* let display = [];
   let result = [];
