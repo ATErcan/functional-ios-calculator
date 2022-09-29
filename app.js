@@ -228,60 +228,8 @@ const numberWriting = (screen) => {
       }
     }
   }
-  // currentDisplay.innerText.split(".").join("").split(",").join("").split("");
 };
 
-/* let display = [];
-  let result = [];
-   */
-
-/* const clear = () => {
-    currentDisplay.innerText = "0";
-  deleteAll.innerText = "AC";
-  display = [];
-  storage = [];
-  result = [];
-  sign = true;
-}; */
-
-/*
-let sign = true;
-const changeSign = () => {
-  if (currentDisplay.innerText === "0") {
-  } else {
-    currentDisplay.innerText = -currentDisplay.innerText;
-    /*     if (sign) {
-      display.unshift("-");
-      currentDisplay.innerText = Number(display.join("")).toLocaleString(
-        "de-DE"
-      );
-      sign = false;
-    } else {
-      display.shift();
-      currentDisplay.innerText = Number(display.join("")).toLocaleString(
-        "de-DE"
-      );
-      sign = true;
-    } sdasdas
-  }
-};
-*/
-
-/* const percent = () => {
-  display = currentDisplay.innerText.split("");
-  console.log(display);
-  const percentageValue = parseFloat(Number(display.join("")) / 100);
-  
-  if (percentageValue.toString().split("").length < 10) {
-    currentDisplay.innerText = percentageValue;
-  } else {
-    alert("Number of values that can be entered exceeded");
-  }
-}; */
-
-console.log(document.querySelector(".plus").innerText);
-console.log(document.querySelector(".minus").innerText);
-console.log(document.querySelector(".divide").innerText);
 const operations = () => {
   storage.forEach((item, i) => {
     if (item === "×") {
@@ -294,23 +242,12 @@ const operations = () => {
       storage[i + 1] = storage[i - 1] - storage[i + 1];
     }
   });
-  currentDisplay.innerText = storage[storage.length - 1]
-    .toString()
-    .replace(".", ",");
+  if (storage[storage.length - 1].toString().length < 9) {
+    currentDisplay.innerText = storage[storage.length - 1]
+      .toString()
+      .replace(".", ",");
+    numberWriting(currentDisplay);
+  } else {
+    alert("Number of values that can be entered exceeded");
+  }
 };
-// console.log(storage);
-
-/* function numberWithCommas(x) {
-  let parts = x.toString().split(".");
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  return parts.join(",");
-} */
-
-// Number(currentDisplay.innerText.split(".").join("").replace(",", "."));
-
-/* switch(operator.innerText){
-  case ×: 
-  case ÷:
-  case +:
-  case −: 
-} */
