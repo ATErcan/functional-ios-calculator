@@ -4,15 +4,16 @@
   padding: 0;
 }
 .container {
-  height: 100vh;
+  height: 90vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 5vh;
 }
 .container .app {
   display: grid;
-  grid-template-columns: repeat(4, 12vh);
-  grid-template-rows: 10vh 20vh repeat(5, 12vh);
+  grid-template-columns: repeat(4, 100px);
+  grid-template-rows: 10vh 20vh repeat(5, 100px);
   gap: 0.4rem 0.4rem;
   text-align: center;
   background-color: #000;
@@ -46,9 +47,9 @@
   justify-content: flex-end;
   align-items: flex-end;
   font-family: "Helvetica Neue", sans-serif;
-  font-size: 4.5rem;
-  padding-right: 1.2rem;
-  padding-left: 1.2rem;
+  font-size: 3.7rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
   /* line-break: anywhere; */
   text-align: right;
   text-orientation: upright;
@@ -80,6 +81,7 @@ sub {
 .container .app .favorites {
   background-color: #a5a5a5;
   color: #000;
+  font-weight: normal;
 }
 .container .app .operator {
   background-color: #f1a33c;
@@ -88,34 +90,51 @@ sub {
   font-size: 2rem;
 }
 
-@media screen and (min-width: 0px) and (max-width: 1270px) {
+@media screen and (min-width: 992px) and (max-width: 1367px) {
   .container {
     height: 80vh;
-    margin-top: 5rem;
+    margin-top: 10vh;
   }
   .container .app {
     display: grid;
-    grid-template-columns: repeat(4, 12vh);
-    grid-template-rows: 30vh repeat(5, 12vh);
-  }
-  .container .app .cells {
-    border-radius: 50%;
-    font-size: 2rem;
-    font-weight: bold;
+    grid-template-columns: repeat(4, 70px);
+    grid-template-rows: 10vh 20vh repeat(5, 70px);
   }
   .container .app .current-display {
-    grid-area: 1 / 1 / 2 / 5;
-    background-color: #000;
-    color: #fff;
+    font-size: 2.7rem;
+    padding-right: 0.4rem;
   }
-  .container .app .function {
-    display: none;
+}
+@media screen and (min-width: 576px) and (max-width: 992px) {
+  .container {
+    height: 90vh;
+    margin-top: 5vh;
   }
-  .container .app .favorites {
-    font-weight: normal;
+  .container .app {
+    display: grid;
+    grid-template-columns: repeat(4, 70px);
+    grid-template-rows: 10vh 20vh repeat(5, 70px);
   }
-  .container .app .c47 {
-    grid-area: 6 / 1 / 7 / 3;
-    border-radius: 5rem;
+  .container .app .current-display {
+    font-size: 2.5rem;
+    padding-right: 0.3rem;
+  }
+}
+@media screen and (min-width: 0px) and (max-width: 576px) {
+  .container {
+    height: 90vh;
+    margin-top: 5vh;
+  }
+  .container .app {
+    display: grid;
+    grid-template-columns: repeat(4, 50px);
+    grid-template-rows: 10vh 20vh repeat(5, 50px);
+  }
+  .container .app .cells {
+    font-size: 1.2rem;
+  }
+  .container .app .current-display {
+    font-size: 2rem;
+    padding-right: 0.3rem;
   }
 }
