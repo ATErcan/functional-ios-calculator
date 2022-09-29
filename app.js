@@ -3,6 +3,9 @@ const currentDisplay = document.querySelector(".current-display");
 const deleteAll = document.querySelector(".delete");
 const numbers = document.querySelectorAll(".numbers");
 
+let storage = [];
+let numberEntered = false;
+
 // The function that runs when the user clicks to a number.
 const numberClick = (number) => {
   if (
@@ -68,6 +71,7 @@ app.addEventListener("click", (e) => {
   // If user clicks to a number
   if (e.target.classList.contains("numbers")) {
     numberClick(e.target);
+    numberEntered = true;
   }
   // Delete function
   else if (e.target.classList.contains("delete")) {
@@ -87,6 +91,33 @@ app.addEventListener("click", (e) => {
   }
   // If user clicks to any function
   else if (e.target.classList.contains("function")) {
+    // Storage is empty but no number is entered
+    if (storage.length === 0 && !numberEntered) {
+    }
+    // Storage is empty and some number entered
+    else if (storage.length === 0 && numberEntered) {
+      console.log("depo bos numaraya tiklandi");
+      storage.push(
+        Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
+      );
+      storage.push(e.target.innerText);
+      numberEntered = false;
+    }
+    // Storage is not empty, but user wants to change the operator
+    else if (storage.length !== 0 && !numberEntered) {
+      console.log("depoda bir sey var, ama numaraya tekrar tiklanmadi");
+      storage.pop();
+      storage.push(e.target.innerText);
+    }
+    // Storage is not empty but user wants to add more operation
+    else if (storage.length !== 0 && numberEntered) {
+      console.log("depoda bir sey var ve yeni numara girildi");
+      storage.push(
+        Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
+      );
+      storage.push(e.target.innerText);
+      numberEntered = false;
+    }
   } else if (e.target.matches(".equals")) {
   }
 });
@@ -123,7 +154,6 @@ app.addEventListener("click", (e) => {
 }; */
 
 /* let display = [];
-  let storage = [];
   let result = [];
    */
 
@@ -176,20 +206,17 @@ console.log(document.querySelector(".minus").innerText);
 console.log(document.querySelector(".divide").innerText);
 const operations = (btn) => {
   storage.forEach((item, i) => {
-    if (item === "") {
+    if (item === "×") {
       storage[i + 1] = storage[i - 1] * storage[i + 1];
-      result.push(storage[i + 1]);
     } else if (item === "÷") {
-      storage[i + 1] = storage[i + 1] / storage[i - 1];
-      result.push(storage[i + 1]);
+      storage[i + 1] = storage[i - 1] / storage[i + 1];
     } else if (item === "+") {
       storage[i + 1] = storage[i + 1] + storage[i - 1];
-      result.push(storage[i + 1]);
     } else if (item === "−") {
       storage[i + 1] = storage[i + 1] - storage[i - 1];
-      result.push(storage[i + 1]);
     }
   });
+  return storage[storage.length - 1];
 };
 // console.log(storage);
 
