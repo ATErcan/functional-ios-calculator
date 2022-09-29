@@ -76,83 +76,6 @@ const percent = () => {
   }
 };
 
-// Calculator event with capturing
-app.addEventListener("click", (e) => {
-  // If user clicks to a number
-  if (e.target.classList.contains("numbers")) {
-    numberClick(e.target);
-    numberWriting(currentDisplay);
-    numberEntered = true;
-  }
-  // Delete function
-  else if (e.target.classList.contains("delete")) {
-    clear();
-  }
-  // If user clicks to comma
-  else if (e.target.classList.contains("comma")) {
-    commaClick(e.target);
-  }
-  // Change sign
-  else if (e.target.classList.contains("sign")) {
-    changeSign();
-  }
-  // Percentage
-  else if (e.target.classList.contains("percent")) {
-    percent();
-  }
-  // If user clicks to any function
-  else if (e.target.classList.contains("function")) {
-    // Storage is empty but no number is entered
-    if (storage.length === 0 && !numberEntered) {
-    }
-    // Storage is empty and some number entered
-    else if (storage.length === 0 && numberEntered) {
-      storage.push(
-        Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
-      );
-      storage.push(e.target.innerText);
-      numberEntered = false;
-      newNumberEntry = true;
-    }
-    // Storage is not empty, but user wants to change the operator
-    else if (storage.length !== 0 && !numberEntered) {
-      if (typeof storage[storage.length - 1] !== "number") {
-        storage.pop();
-      } else {
-        storage = [storage[storage.length - 1]];
-      }
-      storage.push(e.target.innerText);
-      newNumberEntry = true;
-    }
-    // Storage is not empty but user wants to add more operation
-    else if (storage.length !== 0 && numberEntered) {
-      storage.push(
-        Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
-      );
-      storage.push(e.target.innerText);
-      numberEntered = false;
-      newNumberEntry = true;
-    }
-  }
-  // If user clicks to equals
-  else if (e.target.matches(".equals")) {
-    if (storage.length === 0 && !numberEntered) {
-    } else if (storage.length === 0 && numberEntered) {
-    } else if (storage.length !== 0 && !numberEntered) {
-      storage.push(
-        Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
-      );
-      operations();
-    } else if (storage.length !== 0 && numberEntered) {
-      storage.push(
-        Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
-      );
-      operations();
-      newNumberEntry = true;
-    }
-  }
-});
-
 const numberWriting = (screen) => {
   const displayArray = screen.innerText.split(".").join("").split("");
   if (displayArray.includes(",")) {
@@ -251,3 +174,93 @@ const operations = () => {
     alert("Number of values that can be entered exceeded");
   }
 };
+
+const equals = () => {
+  if (storage.length === 0 && !numberEntered) {
+  } else if (storage.length === 0 && numberEntered) {
+  } else if (storage.length !== 0 && !numberEntered) {
+    storage.push(
+      Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
+    );
+    operations();
+  } else if (storage.length !== 0 && numberEntered) {
+    storage.push(
+      Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
+    );
+    operations();
+    newNumberEntry = true;
+  }
+};
+
+// Calculator event with capturing
+app.addEventListener("click", (e) => {
+  // If user clicks to a number
+  if (e.target.classList.contains("numbers")) {
+    numberClick(e.target);
+    numberWriting(currentDisplay);
+    numberEntered = true;
+  }
+  // Delete function
+  else if (e.target.classList.contains("delete")) {
+    clear();
+  }
+  // If user clicks to comma
+  else if (e.target.classList.contains("comma")) {
+    commaClick(e.target);
+  }
+  // Change sign
+  else if (e.target.classList.contains("sign")) {
+    changeSign();
+  }
+  // Percentage
+  else if (e.target.classList.contains("percent")) {
+    percent();
+  }
+  // If user clicks to any function
+  else if (e.target.classList.contains("function")) {
+    // Storage is empty but no number is entered
+    if (storage.length === 0 && !numberEntered) {
+    }
+    // Storage is empty and some number entered
+    else if (storage.length === 0 && numberEntered) {
+      storage.push(
+        Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
+      );
+      storage.push(e.target.innerText);
+      numberEntered = false;
+      newNumberEntry = true;
+    }
+    // Storage is not empty, but user wants to change the operator
+    else if (storage.length !== 0 && !numberEntered) {
+      if (typeof storage[storage.length - 1] !== "number") {
+        storage.pop();
+      } else {
+        storage = [storage[storage.length - 1]];
+      }
+      storage.push(e.target.innerText);
+      newNumberEntry = true;
+    }
+    // Storage is not empty but user wants to add more operation
+    else if (storage.length !== 0 && numberEntered) {
+      storage.push(
+        Number(currentDisplay.innerText.split(".").join("").replace(",", "."))
+      );
+      storage.push(e.target.innerText);
+      numberEntered = false;
+      newNumberEntry = true;
+    }
+  }
+  // If user clicks to equals
+  else if (e.target.matches(".equals")) {
+    equals();
+  }
+});
+
+document.querySelector("body").addEventListener("keydown", handleKeyboardInput);
+
+function handleKeyboardInput(e) {
+  if (e.key === "=" || e.key === "Enter") equals();
+  if (e.key === "Backspace") clear();
+  if (e.key === "Shift") changeSign();
+  if (e.key === "%") percent();
+}
