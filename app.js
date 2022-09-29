@@ -44,7 +44,6 @@ const changeSign = () => {
   const changed = parseFloat(
     Number(currentDisplay.innerText.split(".").join("").replace(",", ".")) * -1
   );
-  console.log(changed);
   currentDisplay.innerText = changed.toString().replace(".", ",");
 };
 
@@ -92,9 +91,36 @@ app.addEventListener("click", (e) => {
   }
 });
 
-const numberWriting = () => {
-  currentDisplay.innerText.split(".").join("").split(",").join("").split("");
-};
+/* const numberWriting = (screen) => {
+  const displayArray = screen.innerText.split(".").join("").split("");
+  if (displayArray.includes(",")) {
+    const indexOfComma = displayArray.indexOf(",");
+    const afterComma = displayArray.splice(
+      indexOfComma,
+      displayArray.length - indexOfComma
+    );
+    console.log(afterComma);
+    console.log(displayArray);
+    if (displayArray.length > 5 && displayArray.length < 9) {
+      displayArray.splice(displayArray.length - 3, 0, ".");
+      displayArray.splice(displayArray.length - 7, 0, ".");
+      screen.innerText = displayArray.join("").concat(afterComma.join(""));
+    } else if (displayArray.length > 2 && displayArray.length < 9) {
+      displayArray.splice(displayArray.length - 3, 0, ".");
+      screen.innerText = displayArray.join("").concat(afterComma.join(""));
+    }
+  } else {
+    if (displayArray.length > 5 && displayArray.length < 9) {
+      displayArray.splice(displayArray.length - 2, 0, ".");
+      displayArray.splice(displayArray.length - 6, 0, ".");
+      screen.innerText = displayArray.join("");
+    } else if (displayArray.length > 2 && displayArray.length < 9) {
+      displayArray.splice(displayArray.length - 2, 0, ".");
+      screen.innerText = displayArray.join("");
+    }
+  }
+  // currentDisplay.innerText.split(".").join("").split(",").join("").split("");
+}; */
 
 /* let display = [];
   let storage = [];
