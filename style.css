@@ -89,6 +89,10 @@ sub {
 .container .app .operator p {
   font-size: 2rem;
 }
+.active-operator {
+  background-color: #fff !important;
+  color: #f1a33c !important;
+}
 
 @media screen and (min-width: 992px) and (max-width: 1367px) {
   .container {

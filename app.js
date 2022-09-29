@@ -2,6 +2,7 @@ const app = document.querySelector(".app");
 const currentDisplay = document.querySelector(".current-display");
 const deleteAll = document.querySelector(".delete");
 const numbers = document.querySelectorAll(".numbers");
+const operators = document.querySelectorAll(".function");
 
 let storage = [];
 let numberEntered = false;
@@ -192,8 +193,23 @@ const equals = () => {
   }
 };
 
+const activeOperator = (btn) => {
+  operators.forEach((item) => {
+    if (item.classList.contains("function")) {
+      if (btn.innerText === item.innerText) {
+        item.classList.add("active-operator");
+      } else {
+        item.classList.remove("active-operator");
+      }
+    } else {
+      item.classList.remove("active-operator");
+    }
+  });
+};
+
 // Calculator event with capturing
 app.addEventListener("click", (e) => {
+  activeOperator(e.target);
   // If user clicks to a number
   if (e.target.classList.contains("numbers")) {
     numberClick(e.target);
