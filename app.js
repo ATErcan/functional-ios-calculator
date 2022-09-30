@@ -157,9 +157,9 @@ const numberWriting = (screen) => {
 const operations = () => {
   storage.forEach((item, i) => {
     if (item === "×") {
-      storage[i + 1] = storage[i - 1] * storage[i + 1];
+      storage[i + 1] = (storage[i - 1] * storage[i + 1]).toFixed(4);
     } else if (item === "÷") {
-      storage[i + 1] = storage[i - 1] / storage[i + 1];
+      storage[i + 1] = (storage[i - 1] / storage[i + 1]).toFixed(4);
     } else if (item === "+") {
       storage[i + 1] = storage[i + 1] + storage[i - 1];
     } else if (item === "−") {
