@@ -27,6 +27,7 @@
   align-items: center;
   border-radius: 50%;
   color: #fff;
+  user-select: none;
   font-size: 2rem;
   font-family: "Helvetica Neue", sans-serif;
   box-shadow: rgba(255, 255, 255, 0.25) 0px 50px 100px -20px,
